@@ -8,7 +8,7 @@ var env = process.env.NODE_ENV
 
 console.log('env -----', env)
 
-module.exports = {
+var config = {
   mode: 'production',
   entry: './src/main.js',
   output: {
@@ -20,9 +20,7 @@ module.exports = {
       title: 'react stack',
       template: path.resolve(__dirname, './public/index.html')
     }),
-    new CleanWebpackPlugin(),
-    new webpack.NamedModulesPlugin(),
-    new webpack.HotModuleReplacementPlugin()
+    new CleanWebpackPlugin()
   ],
   module: {
     rules: [
@@ -35,12 +33,32 @@ module.exports = {
     alias: {
       '@': path.resolve(__dirname, './src')
     }
-  },
-  devServer: {
+  }
+}
+
+// 开发环境
+if (env == 'development') {
+  config.mode = 'development'
+  config.devServer = {
     host: 'localhost',
     port: 8000,
     open: true,
     hot: true,
-    contentBase: path.resolve(__dirname, './public')
+    contentBase: path.resolve(__dirname, './public'),
+    overlay: {
+      errors: true
+    }
   }
+  // 热更新插件
+  config.plugins.push(new webpack.NamedModulesPlugin())
+  config.plugins.push(new webpack.HotModuleReplacementPlugin())
+  // ESLint检测
+  config.module.rules.push({
+    test: /\.js$/,
+    exclude: /node_modules/,
+    enforce: 'pre',
+    use: ['eslint-loader']
+  })
 }
+
+module.exports = config

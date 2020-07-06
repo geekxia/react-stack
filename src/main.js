@@ -1,12 +1,5 @@
-import './assets/style.css'
-import '@/assets/common.css'
-import '@/assets/style.scss'
+import React from 'react'
+import ReactDOM from 'react-dom'
+import App from './App'
 
-import fetch from './utils/fetch'
-
-console.log('main')
-console.log('webpack')
-
-console.log(fetch)
-
-document.getElementById('app').style.background = '#cccccc'
+ReactDOM.render(<App />, document.getElementById('app'))

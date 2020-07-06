@@ -45,7 +45,7 @@
 
   rules 解析规则配置
     module.rules = [{test:/\.css$/,use:['style-loader','css-loader']}]
-  
+
   支持sass：cnpm install sass-loader node-sass -D
 
 5、别名配置
@@ -68,8 +68,8 @@
     new webpack.HotModuleReplacementPlugin()
 
   静态资源目录设置：contentBase
-  
-7、区分生产与开发环境 
+
+7、区分生产与开发环境
 
   cnpm install cross-env -D
 
@@ -81,3 +81,43 @@
   cnpm install babel-loader @babel/core -D
 
   在配置loaders时，要加 exclude: /node_modules/
+
+9、ESLint检测配置
+
+  cnpm install eslint eslint-loader -D
+  在配置loader规则时，加上：
+    exclude: /node_modules/
+    enforce: 'pre'
+  编写.eslintrc.json文件
+  ```
+  {
+      "rules": {
+          "semi": 2,
+          "quotes": 0
+      },
+      "parserOptions": {
+          "ecmaVersion": 6,
+          "sourceType": "module",
+          "ecmaFeatures": {
+              "jsx": true
+          }
+      }
+  }
+  ```
+  开启errors浮层：devServer.overlay = { errors: true }
+    测试：添加 "no-console":"error" 禁用console
+
+10、使用react和react-dom
+  cnpm install react react-dom -S
+  cnpm install @babel/preset-react -D  // 支持jsx语法
+  cnpm install @babel/preset-env -D  // 支持ES6及其最新语法
+
+  编写配置文件.babelrc.json文件
+  ```
+  {
+    "presets": ["@babel/preset-react", "@babel/preset-env"]
+  }
+  ```
+
+  封装App.js根组件
+  使用ReactDOM.render()把App根组件渲染到id=app的视图中去
