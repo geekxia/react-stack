@@ -37,12 +37,16 @@
     cnpm install clean-webpack-plugin -D
     注意：webpack指南中的用法，与其github上有很大差异，请以github文档为准
 
+
+
 4、使用css样式
 
   安装：cnpm install style-loader css-loader -D
 
   rules 解析规则配置
     module.rules = [{test:/\.css$/,use:['style-loader','css-loader']}]
+  
+  支持sass：cnpm install sass-loader node-sass -D
 
 5、别名配置
   ```
@@ -52,3 +56,28 @@
     }
   }
   ```
+
+6、本地服务
+
+  cnpm install webpack-dev-server -D
+  启动：webpack-dev-server
+
+  启动热更新：devServer.hot = true
+  加两个插件：
+    new webpack.NamedModulesPlugin(),
+    new webpack.HotModuleReplacementPlugin()
+
+  静态资源目录设置：contentBase
+  
+7、区分生产与开发环境 
+
+  cnpm install cross-env -D
+
+  配置npm script： cross-env NODE_ENV=development webpack-dev-server
+
+
+8、js解析
+
+  cnpm install babel-loader @babel/core -D
+
+  在配置loaders时，要加 exclude: /node_modules/

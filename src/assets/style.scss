@@ -1,0 +1,12 @@
+$orange: green;
+$size: 100px;
+
+.box {
+    &>div {
+        h1 {
+            color: $orange;
+            font-size: $size;
+        }
+        
+    }
+}
