@@ -1,14 +1,14 @@
 {
-    "rules": {
-        "semi": 0,
-        "quotes": 0,
-        "no-console": "error"
-    },
     "parserOptions": {
         "ecmaVersion": 6,
         "sourceType": "module",
         "ecmaFeatures": {
             "jsx": true
         }
+    },
+    "rules": {
+        "semi": 0,
+        "quotes": 0,
+        "no-console": 0
     }
 }

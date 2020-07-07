@@ -24,15 +24,15 @@ var config = {
   ],
   module: {
     rules: [
-      { test: /\.css$/, use: ['style-loader', 'css-loader']},
-      { test: /\.scss$/, use: ['style-loader', 'css-loader', 'sass-loader']},
+      { test: /\.(css|scss)$/, use: ['style-loader', 'css-loader']},
       { test: /\.(js|jsx)$/, exclude: /node_modules/, use: ['babel-loader']}
     ]
   },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src')
-    }
+    },
+    extensions: [".js", ".json"]  // 自动解析扩展
   }
 }
 
@@ -54,9 +54,9 @@ if (env == 'development') {
   config.plugins.push(new webpack.HotModuleReplacementPlugin())
   // ESLint检测
   config.module.rules.push({
-    test: /\.js$/,
     exclude: /node_modules/,
     enforce: 'pre',
+    test: /\.(js|jsx)$/,
     use: ['eslint-loader']
   })
 }
