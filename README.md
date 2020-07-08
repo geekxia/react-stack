@@ -121,3 +121,34 @@
 
   封装App.js根组件
   使用ReactDOM.render()把App根组件渲染到id=app的视图中去
+
+
+## React
+
+
+```
+<input value={this.state.val} onChange={this.change.bind(this, 1)} />
+<input defaultValue={this.state.val2} onInput={this.change.bind(this, 2)} />
+<input onKeyUp={this.keyupHandle.bind(this)} />
+```
+表单 e.keyCode = 13 监听Enter事件
+checkbox 和 radio : checked onChange
+select 单选：value=''  onChange
+select 多选：value=[]  onChange
+input：defaultValue  onInput
+
+* refs.aaa.value
+* refs.bbb.style.color = 'red'
+
+
+状态提升:
+父子组件通信：
+```
+<button onClick={this.childHandle.bind(this)}>测试事件</button>
+<button onClick={this.props.onTest.bind(this,1,2,5)}>测试事件</button>
+```
+
+组合：组件复用
+  {props.children}
+  {props.left} {props.right}
+  {props.message} {props.title}

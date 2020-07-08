@@ -10,11 +10,21 @@ import fetch from './utils/fetch'
 // import Home from '@/views/Home'
 import { Home } from '@/views/'
 
-export default function App() {
-  return(
-    <div>
-    <h1>Hello React 2</h1>
-    <Home aaa='1'></Home>
-    </div>
-  )
+export default class App extends React.Component {
+  testHandle(arg1, arg2, arg3) {
+    console.log(arg1, arg2, arg3)
+  }
+  getRef() {
+    console.log(this.refs.c.xxxHandle())
+  }
+  render() {
+    return(
+      <div>
+      <h1>Hello React 2</h1>
+        <Home ref='c' aaa='1' onTest={this.testHandle}></Home>
+        <button onClick={this.getRef.bind(this)}></button>
+      </div>
+    )
+  }
+  
 }

@@ -6,23 +6,53 @@ export default class Home extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      msg: 'welcome to react'
+      msg: 'welcome to react',
+      val: 1,
+      val2: 2
     }
     this.xxxHandle1 = this.xxxHandle.bind(this, 'arg')
   }
   xxxHandle(arg, e) {
-    console.log('xxx', arg, e)
+    this.props.onTest('1','2', 3)
+  }
+  change(idx, e) {
+    console.log(e)
+    switch(idx) {
+      case 1:
+        this.setState({
+          val: e.target.value
+        })
+        break
+      case 2:
+        this.setState({
+          val2: e.target.value
+        })
+        break
+      default:
+    }
+    
+  }
+  keyupHandle(e) {
+    console.log(e.keyCode)
+  }
+  getInputVal() {
+    console.log(this.refs.aaa.value)
+    this.refs.bbb.style.color = 'red'
   }
   render() {
+    console.log(this.props)
     return(
       <div>
-        <h1>{this.state.msg}</h1>
-        <h1>{this.props.aaa}</h1>
-        <Child msg='2'></Child>
-        <Child2 msg={this.state.msg} onXXX={this.xxxHandle.bind(this)}></Child2>
-        <button onClick={(e)=>this.xxxHandle('arg', e)}>点击</button>
-        <button onClick={this.xxxHandle.bind(this, 'arg')}>点击</button>
-        <button onClick={this.xxxHandle1}>点击</button>
+
+        <button onClick={this.xxxHandle.bind(this)}>测试事件</button>
+        <button onClick={this.props.onTest.bind(this,1,2,5)}>测试事件</button>
+        <br />
+
+        <div ref='bbb'>230203</div>
+
+        <input ref='aaa' value={this.state.val} onChange={this.change.bind(this, 1)} />
+        <input defaultValue={this.state.val2} onInput={this.change.bind(this, 2)} onKeyUp={this.keyupHandle.bind(this)} />
+        <button onClick={this.getInputVal.bind(this)}>按钮</button>
 
       </div>
     )
