@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { Child, Child2 } from '@/components'
+import { useHistory } from 'react-router-dom'
 
 export default class Home extends React.Component {
   constructor(props) {
@@ -30,29 +31,24 @@ export default class Home extends React.Component {
         break
       default:
     }
-    
+
   }
   keyupHandle(e) {
     console.log(e.keyCode)
   }
-  getInputVal() {
-    console.log(this.refs.aaa.value)
-    this.refs.bbb.style.color = 'red'
+  skip() {
+    // let history = useHistory()
+    console.log(this.props)
+    // 动态路由
+    this.props.history.push('/home/detail/0')
   }
   render() {
-    console.log(this.props)
+    // console.log(this.props)
     return(
       <div>
 
-        <button onClick={this.xxxHandle.bind(this)}>测试事件</button>
-        <button onClick={this.props.onTest.bind(this,1,2,5)}>测试事件</button>
-        <br />
-
-        <div ref='bbb'>230203</div>
-
-        <input ref='aaa' value={this.state.val} onChange={this.change.bind(this, 1)} />
-        <input defaultValue={this.state.val2} onInput={this.change.bind(this, 2)} onKeyUp={this.keyupHandle.bind(this)} />
-        <button onClick={this.getInputVal.bind(this)}>按钮</button>
+          <h1>首页</h1>
+          <button onClick={this.skip.bind(this)}>跳转</button>
 
       </div>
     )

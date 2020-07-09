@@ -71,7 +71,6 @@ class Life extends React.Component {
       <div>
         <h1>{this.state.msg}</h1>
         <button onClick={this.click.bind(this)}>点击</button>
-        <button style={{backgroundColor: xxx.background, color: xxx.color}}>context</button>
       </div>
       <div>121212</div>
       <h1>9020023</h1>

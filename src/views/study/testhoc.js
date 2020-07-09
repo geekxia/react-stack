@@ -2,8 +2,10 @@ import React from 'react'
 
 import hoc from '@/utils/hoc'
 
-'@hoc'
 class TestHoc extends React.Component {
+  componentDidMount() {
+    console.log(this.props)
+  }
   render() {
     return(
       <div>
@@ -15,5 +17,4 @@ class TestHoc extends React.Component {
   }
 }
 
-// export default hoc(TestHoc)
-export default TestHoc
+export default hoc(TestHoc)
