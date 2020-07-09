@@ -1,0 +1,13 @@
+.pane {
+  height: 80px;
+  display: flex;
+  text-align: center;
+}
+.left {
+  flex: 1;
+  border: 1px solid red;
+}
+.right {
+  flex: 2;
+  border: 1px solid blue;
+}

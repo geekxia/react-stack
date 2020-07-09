@@ -152,3 +152,39 @@ input：defaultValue  onInput
   {props.children}
   {props.left} {props.right}
   {props.message} {props.title}
+
+生命周期
+
+
+上下文
+export const ThemeCtx = React.createContext()
+<ThemeCtx.Provider value={}></ThemeCtx.Provider>
+
+import { ThemeCtx } from '@/utils/theme'
+Life.contextType = ThemeCtx
+console.log(this.context)
+<button style={{backgroundColor: this.context.background, color: this.context.color}}>context</button>
+
+
+碎片：
+```
+render() {
+  return(
+    <React.Fragment>
+      <div>第1个兄弟元素</div>
+      <div>第2个兄弟元素</div>
+      <div>第3个兄弟元素</div>
+    </React.Fragment>
+  )
+}
+
+render() {
+  return(
+    <>
+      <div>第1个兄弟元素</div>
+      <div>第2个兄弟元素</div>
+      <div>第3个兄弟元素</div>
+    </>
+  )
+}
+```
