@@ -1,84 +1,76 @@
 import React from 'react'
 
-import {ThemeCtx} from '@/utils/theme'
-class Life extends React.Component {
-  // 挂载
+export default class Life extends React.Component {
 
-  // 不要使用setState
-  // 不要把 props值赋值给state
+  /* 挂载阶段 */
+
+  // 构造器
+  // 不能使用setState()
+  // 也不能把props赋值给state
   constructor(props) {
+    // 调用父类的构造器
     super(props)
     this.state = {
-      msg: 1
+      count: 1
     }
-    console.log('----constructor')
+    console.log('----contructor')
   }
-  static getDerivedStateFromProps() {
-    console.log('----getDerivedStateFromProps')
-    return null
-  }
-  // componentWillMount() {
-  //   console.log('----componentWillMount')
+  // 很少用
+  // static getDerivedStateFromProps() {
+  //   console.log('----getDerivedStateFromProps')
+  //   return null
   // }
-  componentDidMount() {
+  // 非常重要：表达DOM准备就绪、动态数据都已经初始化完成
+  componentDidMount(){
     console.log('----componentDidMount')
-    console.log('props', this.props)
+    // 开启长连接
+    // 开定时器
+    // 调接口
   }
 
-  // 更新
-  shouldComponentUpdate(prevProps, prevState, snapshot) {
+
+  /* 更新阶段 */
+
+  // Diff运算的开关
+  shouldComponentUpdate() {
     console.log('----shouldComponentUpdate')
-    console.log(prevProps, prevState, snapshot)
     return true
   }
-  getSnapshotBeforeUpdate() {
-    console.log('----getSnapshotBeforeUpdate')
-    return null
-  }
+  // 很少用
+  // getSnapshotBeforeUpdate(){
+  //   console.log('----getSnapshotBeforeUpdate')
+  //   return null
+  // }
+  // DOM更新完成时
   componentDidUpdate() {
     console.log('----componentDidUpdate')
   }
 
-  // 卸载
-  componentWillUnmount() {
+  /* 卸载阶段 */
+  componentWillUnmount(){
     console.log('----componentWillUnmount')
+    // 关闭长连接
+    // 清除定时器
   }
-
-
-  // 错误处理
-  static getDerivedStateFromError() {
-    console.log('----getDerivedStateFromError')
-  }
-  componentDidCatch() {
-    console.log('----componentDidCatch')
-  }
-
-
 
   click() {
-    this.setState({
-      msg: 100
+    // this.setState(prevState=>({count: prevState.count+1}))
+    this.setState(prevState=>{
+      return {
+        count: prevState.count+1
+      }
     })
   }
 
-  // 必须的，且是纯函数
+  // 唯一的一个必须要的钩子函数
   render() {
     console.log('----render')
-    let xxx = this.context
-    console.log('context', xxx)
     return(
-      <React.Fragment>
       <div>
-        <h1>{this.state.msg}</h1>
+        <h1>生命周期测试</h1>
+        <h3>{this.state.count}</h3>
         <button onClick={this.click.bind(this)}>点击</button>
       </div>
-      <div>121212</div>
-      <h1>9020023</h1>
-      </React.Fragment>
     )
   }
 }
-
-Life.contextType = ThemeCtx
-
-export default Life

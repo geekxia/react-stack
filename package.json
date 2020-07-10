@@ -1,7 +1,7 @@
 {
   "name": "react-stack",
   "version": "1.0.0",
-  "description": "",
+  "description": "1、从零到一搭建React项目工程架构\r 2、学习React技术栈：React、React-Router、Mobx\r 3、硬件：win7/win10\r 4、环境：node.js v12+\r 5、构建工具：Webpack",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -21,6 +21,7 @@
     "css-loader": "^3.6.0",
     "eslint": "^7.4.0",
     "eslint-loader": "^4.0.2",
+    "file-loader": "^6.0.0",
     "html-webpack-plugin": "^4.3.0",
     "node-sass": "^4.14.1",
     "sass-loader": "^9.0.1",
@@ -30,6 +31,7 @@
     "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
+    "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0"

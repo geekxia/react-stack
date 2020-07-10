@@ -1,4 +1,12 @@
+export function foo() {
+  // console.log('foo')
+}
+
+export function bar() {
+  // console.log('bar')
+}
+
 export default {
-    a: 1,
-    b: 2
-};
+  foo,
+  bar
+}

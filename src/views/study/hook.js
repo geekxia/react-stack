@@ -1,38 +1,68 @@
+// Hooks 它是一组函数API
+
+// useState
+// useEffect（副作用）:开启长连接、调接口、DOM操作、定时器等
+// useContext
+// 自定义Hooks
+
+// 解决问题：类组件  函数组件（无状态组件）
+// Hooks，让函数式组件可以拥有state、生命周期等特性
+
 import React, { useState, useEffect } from 'react'
+console.log('use', useState)
+export default function TestHook(props) {
 
-export default function HookExample(props) {
+  let [count, setCount] = useState(20)
+  let [msg, setMsg] = useState('hello hook')
+  let [list, setList] = useState([])
+
   var timer = null
-  const [count, setCount] = useState(100)
-  const [msg, setMsg] = useState('hello hook')
-  const [list, setList] = useState([])
-
-  function click() {
-    var c = count + 1
-    setCount(c)
+  function countChange() {
+    setCount(count+1)
+    setMsg(msg+'1')
   }
-  // useEffect = componentDidMount + componentDidUpdate + componentWillUnmount
-  // useEffect 的第二参数，进行性能优化，只有当参数列表中数据变化时才执行Effect
-  useEffect(()=>{
-    console.log('调接口')
-    setCount(count*100)
-    return undefined
-  }, [list])
 
+  // componentDidMount   mounted
+  // componentDidUpdate  updated
+  // componentWillUnmount  beforeDestroyed
+  // 使用定时器
+
+  // useEffect第一个参数，必须是一个函数，并且这个函数要有返回值
   useEffect(()=>{
+    // 调接口，开启长连接、开启定时
+    // 做其它初始化的业务逻辑
+    console.log('-----effect')
     timer = setInterval(()=>{
       setCount(count+1)
     }, 1000)
-    // 一定要返回一个函数，用于清除那些需要被清除的Effect
     return ()=>{
-      console.log('clear')
+      // 清除长连接、清除定时器
       clearInterval(timer)
     }
-  }, [msg, count])
+  }, [msg,list]) // 开头
+
+  // 使用长连接
+  useEffect(()=>{
+    // open websocket
+    return ()=>{
+      // close websocket
+    }
+  })
+
+  useEffect(()=>{
+    document.title = '你们'
+    document.getElementById('box').style.color = 'red'
+    return undefined
+  })
 
   return (
     <div>
-      <h1>{msg}</h1>
-      <h3 onClick={click}>{count}</h3>
+      <h1>Hooks测试</h1>
+      <h3>{count}</h3>
+      <button onClick={countChange}>增加</button>
+      <hr/>
+      <h3>{msg}</h3>
+      <h3 id='box'>ref dom</h3>
     </div>
   )
 }

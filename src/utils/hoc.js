@@ -1,32 +1,55 @@
 import React from 'react'
 
-export default function hoc(Wrapped) {
+// 容器组件：对UI组件进行包装或修饰
+// UI组件：普普通通的业务组件
+
+// 这就是一个函数（纯函数），也是容器组件
+// 第一个参数，必须是组件
+export default function hoc(WrappedComponent) {
   return class extends React.Component {
     constructor(props) {
       super(props)
       this.state = {
-        msg: 1234
+        msg: 'hello child',
+        arr: [
+          { id: 1, label: '中国' },
+          { id: 2, label: '英国' },
+          { id: 3, label: '德国' }
+        ]
       }
     }
     componentDidMount() {
-      console.log('hoc mounted')
+      console.log('mounted')
     }
-    _click() {
-      console.log('hoc click', this)
+    click() {
+      console.log('child click', this)
     }
-    _create() {
-      return(
-        <div>hoc create title</div>
-      )
+    createList() {
+      let { arr } = this.state
+      return arr.map(ele=>(
+        <div key={ele.id}>{ele.label}</div>
+      ))
     }
+
     render() {
-      return(
+      return (
         <div>
-          <h1>hoc title</h1>
-          <Wrapped msg={this.state.msg} click={this._click} create={this._create}></Wrapped>
-          <h1>hoc footer</h1>
+          <h3>hoc header</h3>
+          <WrappedComponent
+            msg={this.state.msg}
+            onTest={this.click}
+            onInit={this.createList.bind(this)}
+          >
+          </WrappedComponent>
+          <h3>hoc footer</h3>
         </div>
       )
     }
   }
 }
+
+
+// 函数组件（无状态组件）
+// function Model(props) {
+//   return()
+// }

@@ -1,3 +1,20 @@
 import React from 'react'
 
-export const ThemeCtx = React.createContext()
+let theme = {
+  dark: {
+    color: 'white',
+    background: 'black'
+  },
+  light: {
+    color: 'blue',
+    background: 'white'
+  },
+  pink: {
+    color:'white',
+    background: 'pink'
+  }
+}
+
+let ThemeContext = React.createContext()
+
+export { ThemeContext, theme }

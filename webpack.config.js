@@ -3,61 +3,72 @@ var HtmlWebpackPlugin = require('html-webpack-plugin')
 var { CleanWebpackPlugin } = require('clean-webpack-plugin')
 var webpack = require('webpack')
 
-// console.log('webpack', webpack)
+
 var env = process.env.NODE_ENV
 
-console.log('env -----', env)
-
 var config = {
-  mode: 'production',
-  entry: './src/main.js',
+  mode: 'production',  // 指定打包的环境
+  // 入口
+  entry: {
+    // main: path.resolve(__dirname, './src/main.js')
+    main: './src/main.js'
+  },
+  // 出口
   output: {
     filename: '[name].[hash].js',
-    path: path.resolve(__dirname, './dist'),  // path必须是绝对路径
+    path: path.resolve(__dirname, './dist')  // 只能用绝对路径
   },
+  // plugin
   plugins: [
+    // 把打包成功后的.js文件自动插入到一个html模板中去
     new HtmlWebpackPlugin({
-      title: 'react stack',
+      title: '我们',
       template: path.resolve(__dirname, './public/index.html')
     }),
-    new CleanWebpackPlugin()
+    // 用于自动删除dist目录
+    new CleanWebpackPlugin(),
   ],
+  // loaders
   module: {
     rules: [
-      { test: /\.(css|scss)$/, use: ['style-loader', 'css-loader']},
-      { test: /\.(js|jsx)$/, exclude: /node_modules/, use: ['babel-loader']}
+      { test: /\.(scss|css)$/, use: ['style-loader', 'css-loader', 'sass-loader']},
+      { test: /\.(png|svg|jpg|gif)$/, use: ['file-loader']},
+      // exclude不包括
+      { test: /\.js$/, exclude: /node_modules/,  use: ['babel-loader']}
     ]
   },
   resolve: {
+    // 别名
     alias: {
       '@': path.resolve(__dirname, './src')
     },
-    extensions: [".js", ".json"]  // 自动解析扩展
+    extensions: [".js", ".json"]
   }
 }
 
-// 开发环境
+
+// 这是开发环境
 if (env == 'development') {
+
   config.mode = 'development'
+  // 用于热更新（这两个plugin是webpack内置的）
+  config.plugins.push(new webpack.NamedModulesPlugin())
+  config.plugins.push(new webpack.HotModuleReplacementPlugin())
+  // 本地服务
   config.devServer = {
-    host: 'localhost',
     port: 8000,
-    open: true,
-    hot: true,
     contentBase: path.resolve(__dirname, './public'),
-    overlay: {
+    open: true,
+    hot: true,   // 开启热更新
+    overlay: {    // 报错时的浮层
       errors: true
     }
   }
-  // 热更新插件
-  config.plugins.push(new webpack.NamedModulesPlugin())
-  config.plugins.push(new webpack.HotModuleReplacementPlugin())
-  // ESLint检测
   config.module.rules.push({
+    test: /\.js$/,
     exclude: /node_modules/,
-    enforce: 'pre',
-    test: /\.(js|jsx)$/,
-    use: ['eslint-loader']
+    use: ['eslint-loader'],
+    enforce: 'pre'   // 在babel编译之间进行代码检测
   })
 }
 
