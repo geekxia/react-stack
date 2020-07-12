@@ -188,3 +188,97 @@ render() {
   )
 }
 ```
+
+
+## 路由
+
+
+
+withRouter 在components组件中的使用
+
+
+动态加载组件 loadable
+
+  eslint配置：cnpm install babel-eslint -D
+  ```
+  # .eslintrc.json
+  # ES6新语法（包括异步import、装饰器）都要安装eslint-babel并配置
+  {
+    "parser": "eslint-babel"
+  }
+  ```
+
+  cnpm install @babel/plugin-syntax-dynamic-import -D
+  cnpm install @loadable/component -S
+  ```
+  # .babelrc.json
+  "plugins": [
+    ["@babel/plugin-syntax-dynamic-import"]
+  ]
+  ```
+
+  ## 状态管理
+
+  1、安装 mobx 和 mobx-react
+
+    cnpm install mobx -S
+    cnpm install mobx-react -S
+
+  2、安装支持装饰器语法的babel插件并配置文件
+  ```
+  # .babelrc.json
+  "plugins": [
+    ["@babel/plugin-proposal-decorators", { "legacy": true }],
+    ["@babel/plugin-proposal-class-properties", { "loose" : true }]
+  ]
+  ```
+
+  3、创建 store根实例
+  ```
+  # /store/index.js
+  class Store {
+    constructor() {
+      this.TodoStroe = new TodoStroe()
+    }
+  }
+  export default new Store()
+  ```
+
+  4、创建 子store
+  ```
+  import { observable, action, computed } from 'mobx'
+  class TodoStroe {
+    @observable count = 0
+    @observable list = []
+    @action addCount() {
+      this.count++
+    }
+    @action changeList(payload) {
+      this.list.push(payload)
+    }
+    @computed get count2() {
+      return this.count*100
+    }
+  }
+  ```
+
+  5、使用 store
+
+  ```
+  # App.js
+  import store from '@/store'
+  import { Provider } from 'mobx-react'
+
+  <Provider store={store}></Provider>
+  ```
+
+  ```
+  # Home.js
+  import { observer, inject } from 'mobx-react'
+
+  @inject('store')
+  @observer
+  class Home extends React.Component {
+    # 在 this.props.store.TodoStroe 中即可使用状态数据和方法
+  }
+  ```

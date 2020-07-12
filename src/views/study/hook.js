@@ -9,7 +9,7 @@
 // Hooks，让函数式组件可以拥有state、生命周期等特性
 
 import React, { useState, useEffect } from 'react'
-console.log('use', useState)
+
 export default function TestHook(props) {
 
   let [count, setCount] = useState(20)
@@ -18,7 +18,8 @@ export default function TestHook(props) {
 
   var timer = null
   function countChange() {
-    setCount(count+1)
+    count++
+    setCount(count)
     setMsg(msg+'1')
   }
 
@@ -33,21 +34,24 @@ export default function TestHook(props) {
     // 做其它初始化的业务逻辑
     console.log('-----effect')
     timer = setInterval(()=>{
-      setCount(count+1)
+      count++
+      setCount(count)
     }, 1000)
     return ()=>{
       // 清除长连接、清除定时器
       clearInterval(timer)
     }
-  }, [msg,list]) // 开头
+  }, [msg,list,count]) // 开头
 
   // 使用长连接
   useEffect(()=>{
     // open websocket
+    count++
+    setCount(count)
     return ()=>{
       // close websocket
     }
-  })
+  }, [msg])
 
   useEffect(()=>{
     document.title = '你们'

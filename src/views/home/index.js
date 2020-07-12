@@ -1,6 +1,10 @@
 import React from 'react'
 
-export default class Home extends React.Component{
+import { observer, inject } from 'mobx-react'
+
+@inject('store')
+@observer
+class Home extends React.Component{
 
   constructor(props) {
     super(props)
@@ -28,13 +32,27 @@ export default class Home extends React.Component{
     ))
   }
 
+  changeMsg() {
+    this.props.store.TodoStroe.changeMsg('hello mobx-react')
+  }
+
 
   render() {
+    let { TodoStroe } = this.props.store
     return (
       <div>
         <h1>首页</h1>
         {this.createList()}
+        <hr/>
+        <h3>{TodoStroe.msg}</h3>
+        <button onClick={this.changeMsg.bind(this)}>改变store</button>
+        <hr/>
+        <h3>{TodoStroe.count}</h3>
+        <h3>{TodoStroe.count2}</h3>
+        <button onClick={()=>TodoStroe.add()}>增加</button>
       </div>
     )
   }
 }
+
+export default Home

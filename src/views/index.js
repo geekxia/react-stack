@@ -1,4 +1,7 @@
-import Jsx from './study/jsx'
+import loadable from '@loadable/component'
+
+// import Jsx from 
+const Jsx = loadable(()=>import('./study/jsx'))
 import Event from './study/event'
 import Condition from './study/condition'
 import List from './study/list'
@@ -12,8 +15,9 @@ import TestHoc from './study/testhoc'
 import TestType from './study/testtype'
 import TestHook from './study/hook'
 
-import Home from './home'
-import HomeDetail from './home/detail'
+// import Home from './home'
+const Home = loadable(()=>import('./home'))
+const HomeDetail = loadable(()=>import('./home/detail'))
 
 
 export default [

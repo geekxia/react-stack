@@ -3,6 +3,7 @@ import React from 'react'
 // 高阶组件（函数），实际上就是一个纯函数
 import hoc from '@/utils/hoc'
 
+@hoc
 class TestHoc extends React.Component {
 
   render() {
@@ -17,4 +18,5 @@ class TestHoc extends React.Component {
     )
   }
 }
-export default hoc(TestHoc)
+// export default hoc(TestHoc)
+export default TestHoc

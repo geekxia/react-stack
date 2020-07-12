@@ -13,6 +13,8 @@ import {
 import routes from '@/views'
 
 console.log('routes', routes)
+import store from '@/store'
+import { Provider } from 'mobx-react'
 
 export default class App extends React.Component {
   constructor(props) {
@@ -78,29 +80,26 @@ export default class App extends React.Component {
     let { curTheme } = this.state
     return (
       <HashRouter>
-        <div className='app'>
-          {/*上下文是给 TestCtx 这个组件来使用*/}
-          {/*<ThemeContext.Provider value={curTheme}>
-            <button onClick={this.changeTheme.bind(this)}>换肤</button>
-            <TestCtx></TestCtx>
-          </ThemeContext.Provider>*/}
-          <div className='left'>
-            { this.createNavLink() }
+        <Provider store={store}>
+          <div className='app'>
+            {/*上下文是给 TestCtx 这个组件来使用*/}
+            <ThemeContext.Provider value={curTheme}>
+              <div className='left'>
+                { this.createNavLink() }
+              </div>
+              <div className='right'>
+                {/*保证匹配关系，只有一个成立，避免一对多的匹配关系*/}
+                <Switch>
+                  {/*一组匹配规则，从上到下进行匹配*/}
+                  { this.createRoute() }
+                  <Redirect from='/*' to='/'></Redirect>
+                </Switch>
+              </div>
+            </ThemeContext.Provider>
           </div>
-          <div className='right'>
-            {/*保证匹配关系，只有一个成立，避免一对多的匹配关系*/}
-            <Switch>
-              {/*一组匹配规则，从上到下进行匹配*/}
-              { this.createRoute() }
-              <Redirect from='/*' to='/'></Redirect>
-            </Switch>
-          </div>
+        </Provider>
 
-
-        </div>
       </HashRouter>
-
-
     )
   }
 }
