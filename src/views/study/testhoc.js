@@ -1,22 +1,26 @@
 import React from 'react'
 
-// 高阶组件（函数），实际上就是一个纯函数
-import hoc from '@/utils/hoc'
+// 高阶组件（高阶函数），用于修饰React类
+import roleHoc from '@/utils/hoc/roleHoc'
 
-@hoc
+@roleHoc
 class TestHoc extends React.Component {
-
   render() {
-    console.log(this.props)
+    let { role } = this.props
     return (
-      <div>
-        <h1>测试高阶组件</h1>
-        { this.props.msg }
-        { this.props.onInit() }
-        <button onClick={this.props.onTest.bind(this)}>点击</button>
-      </div>
+      <React.Fragment>
+        <div>
+          <h1>测试高阶组件</h1>
+          <h1>{this.props.role}</h1>
+          <h1>{this.props.roleHandle()}</h1>
+          { role === 1 && <button>只有角色=1的人才看得见</button> }
+        </div>
+        <h3>兄弟React元素</h3>
+      </React.Fragment>
+
     )
   }
 }
-// export default hoc(TestHoc)
+
+// 修饰、装饰
 export default TestHoc

@@ -1,8 +1,12 @@
-import TodoStroe from './module/todo'
+import TodoStore from './modules/TodoStore'
+import GoodStore from './modules/GoodStore'
 
+// 根store
 class Store {
+  // 在构造器中，对所有子store进行初始实例化
   constructor() {
-    this.TodoStroe = new TodoStroe()
+    this.todo = new TodoStore()
+    this.good = new GoodStore()
   }
 }
 

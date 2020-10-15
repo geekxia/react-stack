@@ -8,8 +8,7 @@
       }
   },
   "rules": {
-      "semi": 0,
-      "no-console": 0,
-      "no-multi-spaces": "error"
+      "semi": "off",
+      "no-console": 0
   }
 }

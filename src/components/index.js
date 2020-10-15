@@ -1,17 +1,21 @@
-import Child from './child'
-import Ref from './ref'
-import Child1 from './child1'
-import Child2 from './child2'
-import Model1 from './model1'
-import Model2 from './model2'
-import Child3 from './child3'
+import loadable from '@loadable/component'
+
+const TestRouter = loadable(()=>import('./TestRouter'))
+
+import Child1 from './Child1'
+import Radio from './common/Radio'
+import Checkbox from './common/Checkbox'
+import Modal from './common/Modal'
+import Child2 from './Child2'
+import Child3 from './Child3'
+
 
 export {
-  Child,
-  Ref,
   Child1,
+  Radio,
+  Checkbox,
+  Modal,
   Child2,
-  Model1,
-  Model2,
-  Child3
+  Child3,
+  TestRouter
 }

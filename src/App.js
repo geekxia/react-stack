@@ -1,105 +1,87 @@
 import React from 'react'
-import '@/assets/css/sytle.scss'
-import { ThemeContext, theme } from '@/utils/theme'
+
+import ThemeContext, { themes } from '@/utils/ctx/theme'
+
+// 全局样式
+import 'antd/dist/antd.css'  // antd的样式文件
+import '@/assets/css/style.scss'
 
 import {
-  HashRouter,
   BrowserRouter,
+  HashRouter,
   NavLink,
   Route,
   Switch,
   Redirect
 } from 'react-router-dom'
+
 import routes from '@/views'
 
-console.log('routes', routes)
-import store from '@/store'
+// 状态管理
 import { Provider } from 'mobx-react'
+import store from '@/store'
 
-export default class App extends React.Component {
+class App extends React.Component {
   constructor(props) {
     super(props)
-    // 声明式数据
     this.state = {
-      msg: 'hello 2001',
-      curTheme: theme.dark
+      theme: themes.light  // 初始主题色
     }
   }
-
-
   changeTheme() {
-    var i = Math.random()
-    if(i< 0.3) {
-      this.setState({curTheme: theme.dark})
-    } else if(i<0.6 && i>0.3) {
-      this.setState({curTheme: theme.light})
-    } else {
-      this.setState({curTheme: theme.pink})
-    }
+    this.setState({ theme: themes.dark })
   }
-
-  // 生成侧边导航
-  createNavLink() {
+  // 生成导航菜单
+  createNavLinks() {
     return routes.map(ele=>(
-      <div key={ele.id} className='link'>
-        <NavLink exact activeClassName='on' to={ele.path}>{ele.text}</NavLink>
-      </div>
+      <NavLink
+        key={ele.id}
+        to={ele.path}
+        activeClassName='on'
+        exact
+      >
+        {ele.text}
+      </NavLink>
     ))
   }
   // 生成视图容器
-  // exact完全匹配
-  // Route和Switch是直接父子关系，中间不能其它的元素包裹
-  createRoute() {
-    var res = []
+  createRoutes() {
+    let res = []
     routes.map(ele=>{
       res.push(
-        <Route
-          key={ele.id}
-          exact
-          path={ele.path}
-          component={ele.component}
-        ></Route>
+        <Route key={ele.id} path={ele.path} exact component={ele.component} />
       )
       if(ele.children) {
         ele.children.map(ele=>{
           res.push(
-            <Route
-              key={ele.id}
-              exact
-              path={ele.path}
-              component={ele.component}
-            ></Route>
+            <Route key={ele.id} path={ele.path} exact component={ele.component} />
           )
         })
       }
     })
     return res
   }
-
   render() {
-    let { curTheme } = this.state
+    let { theme } = this.state
     return (
       <HashRouter>
         <Provider store={store}>
-          <div className='app'>
-            {/*上下文是给 TestCtx 这个组件来使用*/}
-            <ThemeContext.Provider value={curTheme}>
-              <div className='left'>
-                { this.createNavLink() }
-              </div>
-              <div className='right'>
-                {/*保证匹配关系，只有一个成立，避免一对多的匹配关系*/}
-                <Switch>
-                  {/*一组匹配规则，从上到下进行匹配*/}
-                  { this.createRoute() }
-                  <Redirect from='/*' to='/'></Redirect>
-                </Switch>
-              </div>
-            </ThemeContext.Provider>
-          </div>
+          <ThemeContext.Provider value={theme}>
+            {/*<button onClick={this.changeTheme.bind(this)}>改变主题色</button>*/}
+            <div className='box1'>
+              { this.createNavLinks() }
+            </div>
+            <div className='box2'>
+              <Switch>
+                { this.createRoutes() }
+                <Redirect from='/*' to='/' />
+              </Switch>
+            </div>
+          </ThemeContext.Provider>
         </Provider>
-
       </HashRouter>
     )
   }
 }
+
+export default App

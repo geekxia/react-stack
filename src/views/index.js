@@ -1,116 +1,76 @@
 import loadable from '@loadable/component'
 
-// import Jsx from 
-const Jsx = loadable(()=>import('./study/jsx'))
-import Event from './study/event'
-import Condition from './study/condition'
-import List from './study/list'
-import Form from './study/form'
-import State from './study/state'
-import Combine from './study/combine'
-import Life from './study/life'
-import Fragment from './study/fragment'
-import TestCtx from './study/testctx'
-import TestHoc from './study/testhoc'
-import TestType from './study/testtype'
-import TestHook from './study/hook'
-
-// import Home from './home'
-const Home = loadable(()=>import('./home'))
-const HomeDetail = loadable(()=>import('./home/detail'))
+// @loadable/component 作用是代码分割
+// @babel/plugin-syntax-dynamic-import 作用是支持 ()=>import() 这种语法
+// 当前环境默认是使用ESlint来检测代码的，但是它检测不了 ()=>import()，那怎么办呢？
+// 要安装 babel-eslint 这个解析器来解析 ()=>import() 这种语法
 
 
-export default [
+const TestJsx = loadable(()=>import('./study/TestJsx'))
+const TestProps = loadable(()=>import('./study/TestProps'))
+
+const MusicList = loadable(()=>import('./music/MusicList'))
+const MusicDetail = loadable(()=>import('./music/MusicDetail'))
+
+const TodoList = loadable(()=>import('./todo/TodoList'))
+const TodoDetail = loadable(()=>import('./todo/TodoDetail'))
+
+import TestState from './study/TestState'
+import TestEvent from './study/TestEvent'
+import TestCondition from './study/TestCondition'
+import TestList from './study/TestList'
+import TestForm from './study/TestForm'
+import TestCusForm from './study/TestCusForm'
+import TestLife from './study/TestLife'
+import TestCombine from './study/TestCombine'
+import TestLift from './study/TestLift'
+import TestContext from './study/TestContext'
+import TestHoc from './study/TestHoc'
+import TestHooks from './study/TestHooks'
+
+const routes = [
   {
-    id: 1,
-    path: '/jsx',
-    component: Jsx,
-    text: 'Jsx学习',
-  },
-  {
-    id: 2,
-    path: '/event',
-    component: Event,
-    text: '事件绑定',
-  },
-  {
-    id: 3,
-    path: '/con',
-    component: Condition,
-    text: '条件渲染',
-  },
-  {
-    id: 4,
-    path: '/list',
-    component: List,
-    text: '事件绑定',
-  },
-  {
-    id: 5,
-    path: '/form',
-    component: Form,
-    text: '表单绑定',
-  },
-  {
-    id: 6,
-    path: '/state',
-    component: State,
-    text: '状态提升',
-  },
-  {
-    id: 7,
-    path: '/com',
-    component: Combine,
-    text: '组合继承',
-  },
-  {
-    id: 8,
-    path: '/life',
-    component: Life,
-    text: '生命周期',
-  },
-  {
-    id: 9,
-    path: '/fram',
-    component: Fragment,
-    text: '碎片',
+    id: 13,
+    path: '/todo',
+    component: TodoList,
+    text: 'TodoList',
+    children: [
+      {
+        id: 1301,
+        path: '/todo/detail/:id',
+        component: TodoDetail,
+        text: 'Todo详情'
+      }
+    ]
   },
   {
     id: 10,
-    path: '/ctx',
-    component: TestCtx,
-    text: '上下文',
+    path: '/',
+    component: MusicList,
+    text: '音乐列表',
+    children: [
+      {
+        id: 1001,
+        // 动态路由
+        // 在详情页中，使用 this.props.match.params 来接收动态参数
+        path: '/music/detail/:id/:name',
+        component: MusicDetail,
+        text: '音乐详情'
+      }
+    ]
   },
   {
     id: 11,
-    path: '/hoc',
-    component: TestHoc,
-    text: '高阶组件',
+    path: '/jsx',
+    component: TestJsx,
+    text: '测试JSX'
   },
   {
     id: 12,
-    path: '/type',
-    component: TestType,
-    text: 'PropTypes',
-  },
-  {
-    id: 13,
-    path: '/hook',
-    component: TestHook,
-    text: 'Hooks',
-  },
-  {
-    id: 14,
-    path: '/',
-    component: Home,
-    text: '我的首页',
-    children: [
-      {
-        id: 1401,
-        path: '/home/detail/:id/:name',
-        component: HomeDetail,
-        text: '详情页',
-      }
-    ]
+    path: '/props',
+    component: TestProps,
+    text: '测试Props'
   }
 ]
+
+export default routes
